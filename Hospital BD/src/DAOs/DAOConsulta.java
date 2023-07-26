@@ -66,7 +66,7 @@ public class DAOConsulta {
         return false;
     }
     
-    public  ArrayList<Consulta> selecionarTodosRegistros(){
+    public ArrayList<Consulta> selecionarTodosRegistros(){
         conectar();
         
         ResultSet rs;

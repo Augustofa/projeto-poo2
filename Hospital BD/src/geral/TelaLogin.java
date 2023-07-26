@@ -4,19 +4,33 @@
  */
 package geral;
 
+import DAOs.DAOLogin;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.font.TextAttribute;
+import java.util.Map;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
  *
  * @author Augusto
  */
-public class TelaLogin extends javax.swing.JFrame {
+public class TelaLogin extends JFrame {
   
+    private boolean modoRegistrar = false;
     /**
      * Creates new form TelaLogin
      */
     public TelaLogin() {
         initComponents();
+    }
+    
+    public void modoRegistrar(){
+        this.modoRegistrar = true;
+        this.jLabel1.setText("Crie seu Login");
+        this.botaoConfirmar.setText("Criar");
+        this.labelNovoCadastro.setVisible(false);
     }
 
     /**
@@ -35,17 +49,13 @@ public class TelaLogin extends javax.swing.JFrame {
         botaoConfirmar = new javax.swing.JButton();
         botaoVoltar = new javax.swing.JButton();
         campoSenha = new javax.swing.JPasswordField();
+        labelNovoCadastro = new javax.swing.JLabel();
+        labelNovoCadastro.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel1.setText("Realize seu Login");
-
-        campoUsuario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                campoUsuarioActionPerformed(evt);
-            }
-        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Usuário:");
@@ -69,27 +79,47 @@ public class TelaLogin extends javax.swing.JFrame {
             }
         });
 
+        labelNovoCadastro.setForeground(new java.awt.Color(0, 0, 255));
+        labelNovoCadastro.setText("Novo Cadastro");
+        labelNovoCadastro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                labelNovoCadastroMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                labelNovoCadastroMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                labelNovoCadastroMouseExited(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel1)
+                            .addComponent(campoUsuario)
+                            .addComponent(campoSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE))
+                        .addGap(25, 25, 25))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(botaoConfirmar)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1)
-                    .addComponent(campoUsuario)
-                    .addComponent(campoSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE))
-                .addGap(25, 25, 25))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(botaoConfirmar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(botaoVoltar)
-                .addGap(42, 42, 42))
+                    .addComponent(labelNovoCadastro)
+                    .addComponent(botaoVoltar))
+                .addGap(28, 28, 28))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -102,41 +132,68 @@ public class TelaLogin extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(campoSenha, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+                    .addComponent(campoSenha, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(labelNovoCadastro)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(botaoConfirmar)
-                    .addComponent(botaoVoltar))
-                .addGap(25, 25, 25))
+                    .addComponent(botaoVoltar)
+                    .addComponent(botaoConfirmar))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void campoUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_campoUsuarioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_campoUsuarioActionPerformed
-
     private void botaoConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoConfirmarActionPerformed
         String usuario = this.campoUsuario.getText();
         String senha = new String(this.campoSenha.getPassword());
         
-        this.dispose();
-        //TODO: fazer base de dados para logins e senhas
-        if(usuario.equals("IFTM") && senha.equals("22023")){
-            new Menu(usuario).setVisible(true);    
+        String msg = "Erro no Login";
+        DAOLogin daoLogin = new DAOLogin();
+        if(this.modoRegistrar){
+            if(daoLogin.insereLogin(usuario, senha)){
+                msg = "Login criado com sucesso";
+            }
+            this.dispose();
+            new Menu().setVisible(true);
         }else{
-            JOptionPane.showMessageDialog(null, "Senha ou usuário incorretos");
-            new TelaLogin().setVisible(true);
+            if(!daoLogin.verificaLogin(usuario, senha)){
+                msg = "Usuário ou senha incorretos";
+            }else{
+                this.dispose();
+                new Menu(usuario).setVisible(true);
+                return;
+            }
         }
+        JOptionPane.showMessageDialog(null, msg);
     }//GEN-LAST:event_botaoConfirmarActionPerformed
 
     private void botaoVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botaoVoltarActionPerformed
         this.dispose();
         new Menu().setVisible(true);
     }//GEN-LAST:event_botaoVoltarActionPerformed
+
+    private void labelNovoCadastroMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNovoCadastroMouseClicked
+        TelaLogin telaCadastro = new TelaLogin();
+        telaCadastro.modoRegistrar();
+        
+        this.dispose();
+        telaCadastro.setVisible(true);
+    }//GEN-LAST:event_labelNovoCadastroMouseClicked
+
+    private void labelNovoCadastroMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNovoCadastroMouseEntered
+        Font fonte = this.labelNovoCadastro.getFont();
+        Map atributos = fonte.getAttributes();
+        atributos.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        this.labelNovoCadastro.setFont(fonte.deriveFont(atributos));
+    }//GEN-LAST:event_labelNovoCadastroMouseEntered
+
+    private void labelNovoCadastroMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_labelNovoCadastroMouseExited
+        this.labelNovoCadastro.setFont(new Font("Segoe UI", Font.PLAIN, 12));
+    }//GEN-LAST:event_labelNovoCadastroMouseExited
 
     /**
      * @param args the command line arguments
@@ -181,5 +238,6 @@ public class TelaLogin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel labelNovoCadastro;
     // End of variables declaration//GEN-END:variables
 }
